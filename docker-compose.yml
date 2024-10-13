@@ -6,8 +6,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=ssdb
-    networks:
-      - semantic-search
+    # networks:
+    #   - semantic-search
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -20,8 +20,8 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
-    networks:
-      - semantic-search
+    # networks:
+    #   - semantic-search
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
@@ -40,8 +40,8 @@ services:
     ports:
       - "39200:9200"
       - "39300:9300"
-    networks:
-      - semantic-search
+    # networks:
+    #   - semantic-search
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
@@ -69,8 +69,8 @@ services:
   #   ports:
   #     - "39200:9200" # OpenSearch REST API
   #     - "39600:9600" # Performance Analyzer
-  #   networks:
-  #     - semantic-search
+  #   # networks:
+  #   #   - semantic-search
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "http://localhost:9200"]
   #     interval: 30s
@@ -85,11 +85,12 @@ services:
   #   environment:
   #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
   #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
-  #   networks:
-  #     - semantic-search
+  #   # networks:
+  #   #   - semantic-search
 
-networks:
-  semantic-search:
+# networks:
+#   semantic-search:
+#     driver: bridge
 
 volumes:
   pgdata:

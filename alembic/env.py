@@ -13,6 +13,9 @@ from sqlalchemy import pool
 from alembic import context
 
 from db import db, init_db
+from models import File, User
+
+__models = [File, User]
 
 init_db()
 
