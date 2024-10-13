@@ -1,0 +1,100 @@
+services:
+  postgres:
+    container_name: ss-postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ssdb
+    networks:
+      - semantic-search
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 35432:5432
+    restart: always
+
+  pgadmin:
+    container_name: ss-pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=123456
+    networks:
+      - semantic-search
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - 35050:80
+    restart: always
+
+  elasticsearch:
+    container_name: ss-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=true # Enable security features
+      - ELASTIC_PASSWORD=secret # Set the password for 'elastic' user
+      - xpack.security.authc.api_key.enabled=true # Enable API key authentication (optional)
+    ports:
+      - "39200:9200"
+      - "39300:9300"
+    networks:
+      - semantic-search
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  # opensearch-node1:
+  #   container_name: ss-opensearch-node1
+  #   image: opensearchproject/opensearch:2.5.0 # You can choose the version you need
+  #   environment:
+  #     - cluster.name=opensearch-cluster
+  #     - node.name=opensearch-node1
+  #     - discovery.type=single-node
+  #     - bootstrap.memory_lock=true
+  #     - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+  #     - "DISABLE_SECURITY_PLUGIN=true" # Enable security plugin
+  #     - "OPENSEARCH_SECURITY_ADMIN_PASSWORD=secret" # Set admin password
+  #     # - "OPENSEARCH_SECURITY_AUTO_USE_EXISTING_KEYSTORE=true"
+  #     # - "OPENSEARCH_SECURITY_ALLOW_DEFAULT_SSL_CERTIFICATE=true" # To use self-signed certificates
+  #     - "OPENSEARCH_SECURITY_SSL_HTTP_ENABLED=false" # Disable HTTP SSL
+  #     - "OPENSEARCH_SECURITY_SSL_TRANSPORT_ENABLED=false" # Disable transport SSL
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - opensearch-data:/usr/share/opensearch/data
+  #   ports:
+  #     - "39200:9200" # OpenSearch REST API
+  #     - "39600:9600" # Performance Analyzer
+  #   networks:
+  #     - semantic-search
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:9200"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+
+  # opensearch-dashboards:
+  #   container_name: ss-opensearch-dashboards
+  #   image: opensearchproject/opensearch-dashboards:2.5.0
+  #   ports:
+  #     - "35601:5601" # OpenSearch Dashboards
+  #   environment:
+  #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
+  #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
+  #   networks:
+  #     - semantic-search
+
+networks:
+  semantic-search:
+
+volumes:
+  pgdata:
+  pgadmin-data:
+  esdata:
+    driver: local
+  opensearch-data:
+
