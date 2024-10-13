@@ -37,6 +37,7 @@ class Timestamped(db.Model):
             onupdate=datetime.utcnow,
         )
 
+
 def soft_deletable(cls):
     # Directly assign `deleted_at` column
     cls.deleted_at = db.Column(db.DateTime, nullable=True)
@@ -63,10 +64,7 @@ def timestamped(cls):
 
     # Add `updated_at` column directly
     cls.updated_at = db.Column(
-        db.DateTime,
-        nullable=False,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow
+        db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow
     )
 
     return cls
