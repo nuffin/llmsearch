@@ -14,7 +14,7 @@ TAG="${IMAGE_NAME}:$(date +%m%d_%H%M)"
 TAG_SUFFIX=$1
 test ! -z "${TAG_SUFFIX}" && TAG="${TAG}-${TAG_SUFFIX}"
 
-docker build -t "${TAG}" -f Dockerfile.base . \
+docker build -t "${TAG}" -f docker/Dockerfile.base . \
     && docker tag ${TAG} ${IMAGE_NAME}:latest
 
 # TAR_BALL_FILE_PATH="$(echo ${TAG} | sed "s,:,.,").tar.gz"

@@ -2,7 +2,7 @@ FROM semantic-search-base:latest
 
 WORKDIR /app
 
-COPY gunicorn.conf.py ./
+COPY docker/gunicorn.conf.py ./
 
 # Expose the port the app runs on (change if necessary)
 EXPOSE 35000
