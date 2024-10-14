@@ -1,6 +1,12 @@
 'use client'
 
-import React, { useState, ChangeEvent, FormEvent, DragEvent } from 'react'
+import React, {
+  useEffect,
+  useState,
+  ChangeEvent,
+  FormEvent,
+  DragEvent,
+} from 'react'
 import axios from 'axios'
 
 import './page.css'
@@ -17,6 +23,10 @@ function Home() {
   const [query, setQuery] = useState<string>('')
   const [results, setResults] = useState<Result[]>([])
   const [showUploadDialog, setShowUploadDialog] = useState<boolean>(false)
+
+  useEffect(() => {
+    console.log(file)
+  }, [file])
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
