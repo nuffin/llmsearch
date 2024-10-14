@@ -8,5 +8,5 @@ COPY gunicorn.conf.py ./
 EXPOSE 35000
 
 # Command to run the application using Gunicorn
-CMD ["gunicorn", "-c", "gunicorn.conf.py", "server:app"]
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "app:app"]
 

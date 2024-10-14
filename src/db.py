@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 
 def init_db():
-    from app import app
+    from common import app
 
     DATABASE_URL = getenv("DATABASE_URL", "sqlite:///db.sqlite3")
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
