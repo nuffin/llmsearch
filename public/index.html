@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploader and Query</title>
+    <link rel="stylesheet" href="static/css/index.css"> <!-- Optional CSS file for styling -->
+</head>
+<body>
+    <div class="container">
+        <h1>File Uploader and Search Query</h1>
+
+        <!-- Part 1: File Upload Button -->
+        <div class="file-upload">
+            <button id="upload-btn">Upload File</button>
+
+            <!-- File Upload Popup -->
+            <div id="upload-dialog" class="upload-dialog hidden">
+                <div id="upload-area" class="upload-area">
+                    <p>Drag and drop a file here, or</p>
+                    <input type="file" id="file-input" class="hidden">
+                    <button id="select-btn">Select</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 2: Query Text Area -->
+        <div class="query-area">
+            <form id="query-form">
+                <textarea id="query-textarea" rows="5" placeholder="Enter your query here..."></textarea>
+                <button type="submit">Submit Query</button>
+            </form>
+        </div>
+
+        <!-- Part 3: Results Area -->
+        <div class="results-area">
+            <h2>Results:</h2>
+            <ul id="results-list"></ul>
+        </div>
+    </div>
+
+    <script src="static/js/index.js"></script>
+</body>
+</html>
