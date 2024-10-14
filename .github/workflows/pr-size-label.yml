@@ -1,0 +1,27 @@
+name: size-label
+
+on: pull_request_target
+
+jobs:
+  size-label:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: size-label
+        uses: "pascalgn/size-label-action@v0.5.0"
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          IGNORED: "openapi/**\npackages/request/src/_client/nodeApi.ts\npackages/request/src/_client.ts\npackages/request/src/_recommendation-client.ts\nservices/node-api/src/drizzle/schema.ts\npackages/schema/src/db/**\nclients/studio/public/locales/**\nclients/web/public/locales/**"
+        with:
+          sizes: >
+            {
+              "0": "XS",
+              "50": "S",
+              "150": "M",
+              "500": "L",
+              "2000": "XL",
+              "5000": "XXL"
+            }
