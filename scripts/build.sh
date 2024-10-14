@@ -2,6 +2,11 @@
 
 set -x
 
+FILEPATH=$(realpath $(dirname ${0}))
+ROOTPATH=$(realpath ${FILEPATH}/..)
+
+cd ${ROOTPATH}
+
 IMAGE_NAME="semantic-search"
 
 TAG="${IMAGE_NAME}:$(date +%m%d_%H%M)"

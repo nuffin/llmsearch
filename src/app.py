@@ -167,8 +167,10 @@ def upload_file():
 
 init_db()
 
+
 def main():
     from filetypes.mimetype import detect
+
     dir = os.path.dirname(__file__)
     filepath = os.path.realpath(os.path.join(dir, "..", "requirements.txt"))
     print(f"filepath={filepath}")
