@@ -1,0 +1,38 @@
+{
+  "name": "semantic-search-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:prettier": "prettier --check \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@sentry/nextjs": "^8.34.0",
+    "crc": "^4.3.2",
+    "next": "14.2.15",
+    "path": "^0.12.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.15",
+    "@next/env": "^14.2.15",
+    "@sentry/types": "^8.34.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^9.12.0",
+    "eslint-config-next": "14.2.15",
+    "eslint-plugin-prettier": "^5.2.1",
+    "postcss": "^8",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
