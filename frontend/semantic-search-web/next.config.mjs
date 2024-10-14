@@ -1,5 +1,6 @@
 import bundleAnalyzer from '@next/bundle-analyzer'
 import { withSentryConfig } from '@sentry/nextjs'
+import * as path from 'path'
 
 const nextI18NextConfig = await import('./next-i18next.config.js').then(
   (m) => m.default
@@ -22,61 +23,6 @@ const config = {
     ignoreDuringBuilds: true,
   },
   output: 'export',
-  experimental: {
-    /**
-     * This experimental is unstable, make sure keep `outputFileTracingIgnores` value sync to avoid problem with function size limit
-     * @see https://github.com/vercel/next.js/issues/54245
-     */
-    outputFileTracingExcludes: {
-      '*': ['node_modules/canvas', 'node_modules/.pnpm/canvas@2.11.2'],
-    },
-    webVitalsAttribution: ['CLS', 'LCP'],
-    swcPlugins: [['next-superjson-plugin', {}]],
-  },
-  staticPageGenerationTimeout: 240,
-  transpilePackages: ['@flowgpt'],
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 768, 1024, 1280, 1536, 1920, 2250], // sync to tailwind config
-    imageSizes: [16, 32, 48, 64, 96, 256, 384],
-    remotePatterns: [
-      { protocol: 'https', hostname: 'image-cdn.flowgpt.com' },
-      {
-        protocol: 'https',
-        hostname: 'flow-user-images.s3.us-west-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'flow-prompt-covers.s3.us-west-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'flow-public-assets.s3.us-west-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'flow-chat-images.s3.us-west-1.amazonaws.com',
-      },
-      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
-      { protocol: 'https', hostname: 'media.licdn.com' },
-      { protocol: 'https', hostname: 'wallpapers-clan.com' },
-      { protocol: 'https', hostname: 'cdn.discordapp.com' },
-      { protocol: 'https', hostname: 'abs.twimg.com' },
-      { protocol: 'https', hostname: 'pbs.twimg.com' },
-      { protocol: 'https', hostname: 'i.pinimg.com' },
-      { protocol: 'https', hostname: 'pbs.twimg.com' },
-      { protocol: 'https', hostname: 'i.ibb.co' },
-      { protocol: 'https', hostname: 'pbs.twimg.com' },
-    ],
-    minimumCacheTTL: 432000,
-  },
-  // async headers() {
-  //   return []
-  // },
-  // async rewrites() {
-  //   return [
-  //   ]
-  // },
 }
 
 const plugins = [

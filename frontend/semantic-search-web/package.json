@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "lint:prettier": "prettier --check \"src/**/*.ts\""
+    "lint": "prettier --check . && cross-env NODE_OPTIONS=\"--max-old-space-size=8192\" next lint --quiet",
+    "lint:prettier": "prettier --check \"src/**/*.ts\"",
+    "prettier": "prettier --write --cache ."
   },
   "dependencies": {
     "@sentry/nextjs": "^8.34.0",
@@ -25,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cross-env": "^7.0.3",
     "eslint": "^9.12.0",
     "eslint-config-next": "14.2.15",
     "eslint-plugin-prettier": "^5.2.1",
