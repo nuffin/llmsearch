@@ -2,7 +2,15 @@ import os
 
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
-from flask import jsonify, redirect, render_template_string, request, session, url_for
+from flask import (
+    jsonify,
+    redirect,
+    render_template_string,
+    request,
+    send_from_directory,
+    session,
+    url_for,
+)
 import hashlib
 import logging
 import plotly.express as px
@@ -48,15 +56,19 @@ dash_app.layout = html.Div(
 )
 
 
-@app.route("/")
-def home():
-    return render_template_string(
-        """
-    <h1>Welcome to the Flask + Dash Web App</h1>
-    <p>This page is served by Flask.</p>
-    <p>Click here to go to <a href="/dash/">the Dash app</a>.</p>
-    """
-    )
+# @app.route("/")
+# def home():
+#     return render_template_string(
+#         """
+#     <h1>Welcome to the Flask + Dash Web App</h1>
+#     <p>This page is served by Flask.</p>
+#     <p>Click here to go to <a href="/dash/">the Dash app</a>.</p>
+#     """
+#     )
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react_app(path):
+    return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
