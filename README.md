@@ -1,4 +1,8 @@
-# Semantic Search [中文](README.zh.md)
+# Semantic Search
+
+[中文](README.zh.md)
+
+## Summary
 
 Perform efficient semantic search through local or remote large model backends and ElasticSearch to reduce hardware requirements.
 

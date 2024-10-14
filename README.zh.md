@@ -1,4 +1,8 @@
-# Semantic Search 语义搜索引擎 [英文](README.md)
+# Semantic Search 语义搜索引擎
+
+[英文](README.md)
+
+## 简介
 
 通过本地或远程大模型后端和 ElasticSearch 进行高效的语义搜索，降低对硬件的要求。
 
