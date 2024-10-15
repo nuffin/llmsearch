@@ -1,4 +1,14 @@
 services:
+  llmsearch:
+    container_name: llmsearch-llmsearch
+    image: llmsearch:latest
+    ports:
+      - "58000:58000"
+    environment:
+      - FLASK_APP=llmsearch
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=
+
   postgres:
     container_name: llmsearch-postgres
     image: postgres:latest
@@ -44,6 +54,24 @@ services:
     #   - llmsearch
     volumes:
       - esdata:/usr/share/elasticsearch/data
+
+  localai:
+    container_name: llmsearch-localai
+    image: localai/localai:latest-aio-gpu-nvidia-cuda-12
+    ports:
+      - "58080:8080"
+    # networks:
+    #   - llmsearch
+
+  ollama:
+    container_name: llmsearch-ollama
+    image: ollama:latest
+    ports:
+      - "51400:51400"
+    environment:
+      - OLLAMA_HOST=0.0.0.0:51400
+    # networks:
+    #   - llmsearch
 
   # opensearch-node1:
   #   container_name: llmsearch-opensearch-node1

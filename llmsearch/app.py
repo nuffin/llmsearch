@@ -131,7 +131,7 @@ ALLOWED_EXTENSIONS = {
     "mov",
 }  # Allowed file types
 
-UPLOAD_FOLDER = getenv("UPLOADS_PATH", "uploads")
+UPLOAD_FOLDER = getenv("UPLOADS_PATH", "data/uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
