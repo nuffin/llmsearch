@@ -1,6 +1,6 @@
-from env import getenv
-
 from flask_sqlalchemy import SQLAlchemy
+
+from env import getenv
 
 
 db = SQLAlchemy()

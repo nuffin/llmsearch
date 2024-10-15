@@ -1,7 +1,7 @@
 # gunicorn.conf.py
 
 # Server Socket
-bind = "0.0.0.0:28000"  # Address and port to bind to
+bind = "0.0.0.0:58000"  # Address and port to bind to
 
 # Worker Processes
 workers = 4  # Number of worker processes

@@ -12,4 +12,40 @@ By uploading documents in various file formats, re-training can be performed acc
 
 ## Requirements
 
-Python 3.x (3.8-3.11, for PyTorch and Tensorflow)
+- Python 3.x (3.8-3.11, for PyTorch and Tensorflow), for running directly without docker
+
+## How to run
+
+### Run the LLM and ElasticSearch backends
+
+#### With docker
+
+```sh
+docker compose -p llmsearch -f docker/docker-compose.yml up -d
+```
+
+the default docker-compose.yml contains ollama and localai containers, in which the ollama image is built with `scripts/build-ollama-image.sh`
+
+### Run the llmsearch engine
+
+#### With docker
+
+There is already llm engine entry in docker/docker-comopose.yml. or you can run it with the following command:
+
+```sh
+scripts/build-image.sh
+docker run -d -p 58000:58000 --name llmsearch llmsearch
+```
+
+#### Without docker
+
+Assumed you are in the root directory of the project:
+
+```sh
+pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
+python3 -m llmsearch
+```
+
+## TODO
+
+- [ ] internal LLM server with pytorch and tensorflow

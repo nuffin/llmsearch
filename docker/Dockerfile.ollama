@@ -1,0 +1,27 @@
+# Use an official lightweight base image with Python
+FROM ubuntu:24.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    curl \
+    libssl-dev \
+    libffi-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Ollama (replace with the correct installation commands for Linux)
+RUN curl -O https://ollama.com/install.sh && \
+    chmod +x install.sh && \
+    ./install.sh
+
+# Expose the default port that Ollama uses (if applicable, adjust according to Ollama's settings)
+EXPOSE 11400
+
+# Set the default command (if applicable)
+CMD ["ollama", "serve"]
+
