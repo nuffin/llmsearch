@@ -21,7 +21,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - 35432:5432
+      - 55432:5432
     restart: always
 
   pgadmin:
@@ -35,7 +35,7 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
-      - 35050:80
+      - 55050:80
     restart: always
 
   elasticsearch:
@@ -48,8 +48,8 @@ services:
       - ELASTIC_PASSWORD=secret # Set the password for 'elastic' user
       - xpack.security.authc.api_key.enabled=true # Enable API key authentication (optional)
     ports:
-      - "39200:9200"
-      - "39300:9300"
+      - "59200:9200"
+      - "59300:9300"
     # networks:
     #   - llmsearch
     volumes:
@@ -60,6 +60,13 @@ services:
     image: localai/localai:latest-aio-gpu-nvidia-cuda-12
     ports:
       - "58080:8080"
+    volumes:
+      - local-ai-models:/build/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     # networks:
     #   - llmsearch
 
@@ -70,6 +77,13 @@ services:
       - "51400:51400"
     environment:
       - OLLAMA_HOST=0.0.0.0:51400
+    volumes:
+      - ollama-models:/root/.ollama/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
     # networks:
     #   - llmsearch
 
@@ -95,8 +109,8 @@ services:
   #   volumes:
   #     - opensearch-data:/usr/share/opensearch/data
   #   ports:
-  #     - "39200:9200" # OpenSearch REST API
-  #     - "39600:9600" # Performance Analyzer
+  #     - "59200:9200" # OpenSearch REST API
+  #     - "59600:9600" # Performance Analyzer
   #   # networks:
   #   #   - llmsearch
   #   healthcheck:
@@ -109,7 +123,7 @@ services:
   #   container_name: llmsearch-opensearch-dashboards
   #   image: opensearchproject/opensearch-dashboards:2.5.0
   #   ports:
-  #     - "35601:5601" # OpenSearch Dashboards
+  #     - "55601:5601" # OpenSearch Dashboards
   #   environment:
   #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
   #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
@@ -126,4 +140,6 @@ volumes:
   esdata:
     driver: local
   opensearch-data:
+  local-ai-models:
+  ollama-models:
 
