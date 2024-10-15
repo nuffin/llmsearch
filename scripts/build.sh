@@ -7,7 +7,7 @@ ROOTPATH=$(realpath ${FILEPATH}/..)
 
 cd ${ROOTPATH}
 
-IMAGE_NAME="semantic-search"
+IMAGE_NAME="llmsearch"
 
 TAG="${IMAGE_NAME}:$(date +%m%d_%H%M)"
 

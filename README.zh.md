@@ -1,4 +1,4 @@
-# Semantic Search 语义搜索引擎
+# LLM Search 语义搜索引擎
 
 [英文](README.md)
 
