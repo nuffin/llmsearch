@@ -3,7 +3,7 @@ import os
 
 # Add the src/ directory to the Python path
 sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "llmsearch"))
 )
 from logging.config import fileConfig
 
@@ -12,12 +12,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from db import db, init_db
-from models import File, User
-
-__models = [File, User]
-
-init_db()
+from app import create_app
+from db import db
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -28,6 +24,9 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+
+## create app to init db before accessing db.metadata
+app = create_app()
 
 # add your model's MetaData object here
 # for 'autogenerate' support
