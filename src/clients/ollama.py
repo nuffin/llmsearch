@@ -5,48 +5,16 @@ from typing import Optional, List
 from .base import ClientBase
 
 
-class LocalAIClient(ClientBase):
+class OllamaClient(ClientBase):
     def __init__(self, base_url: str, timeout: Optional[int] = 10):
         """
-        Initializes the LocalAI client with the specified server base URL.
+        Initializes the Ollama client with the specified server base URL.
 
         Args:
-            base_url (str): The base URL of the LocalAI server (e.g., "http://localhost:8080").
+            base_url (str): The base URL of the Ollama server (e.g., "http://localhost:11434").
             timeout (int, optional): Timeout for the HTTP requests. Default is 10 seconds.
         """
-        super(LocalAIClient, self).__init__(base_url, timeout)
-
-    def get_model_info(self, model: str) -> Optional[dict]:
-        """
-        Retrieves model information from the LocalAI server.
-
-        Returns:
-            dict: Model information as a dictionary, or None if the request fails.
-        """
-        try:
-            response = requests.get(
-                f"{self.base_url}/v1/models/{model}", timeout=self.timeout
-            )
-            response.raise_for_status()
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error retrieving model information: {e}")
-            return None
-
-    def list_available_models(self) -> Optional[list]:
-        """
-        Retrieves a list of available models from the LocalAI server.
-
-        Returns:
-            list: List of available models, or None if the request fails.
-        """
-        try:
-            response = requests.get(f"{self.base_url}/v1/models", timeout=self.timeout)
-            response.raise_for_status()
-            return response.json().get("models", [])
-        except requests.exceptions.RequestException as e:
-            print(f"Error retrieving list of models: {e}")
-            return None
+        super(OllamaClient, self).__init__(base_url, timeout)
 
     def generate(
         self,
@@ -56,11 +24,11 @@ class LocalAIClient(ClientBase):
         temperature: Optional[float] = 1.0,
     ) -> Optional[str]:
         """
-        Sends a request to the LocalAI server to generate text based on the input prompt.
+        Sends a request to the Ollama server to generate text based on the input prompt.
 
         Args:
             model (str): The name of the model to be used for inference and embeddings.
-            prompt (str): The prompt or question to send to the LocalAI model.
+            prompt (str): The prompt or question to send to the Ollama model.
             max_tokens (int, optional): The maximum number of tokens to generate. Default is 150.
             temperature (float, optional): The sampling temperature to control the randomness of output. Default is 1.0.
 
@@ -85,7 +53,6 @@ class LocalAIClient(ClientBase):
             )
             response.raise_for_status()
 
-            # Extract and return the generated text from the response
             result = response.json()
             if "choices" in result and len(result["choices"]) > 0:
                 return result["choices"][0]["text"].strip()
@@ -94,12 +61,12 @@ class LocalAIClient(ClientBase):
                 return None
 
         except requests.exceptions.RequestException as e:
-            print(f"Error during the request to LocalAI: {e}")
+            print(f"Error during the request to Ollama: {e}")
             return None
 
     def embedding(self, model: str, text: str) -> Optional[List[float]]:
         """
-        Sends a request to the LocalAI server to generate embeddings from the input text.
+        Sends a request to the Ollama server to generate embeddings from the input text.
 
         Args:
             model (str): The name of the model to be used for inference and embeddings.
@@ -129,36 +96,26 @@ class LocalAIClient(ClientBase):
                 return None
 
         except requests.exceptions.RequestException as e:
-            print(f"Error during the request to LocalAI for embedding: {e}")
+            print(f"Error during the request to Ollama for embedding: {e}")
             return None
 
 
 # Example usage:
 if __name__ == "__main__":
     # Initialize the client
-    client = LocalAIClient(base_url="http://localhost:8080", model="your-model-name")
+    client = OllamaClient(base_url="http://localhost:11434", model="your-model-name")
 
     # Example 1: Generating text
-    prompt = "Tell me a story about a brave knight."
+    prompt = "Describe the future of AI."
     generated_text = client.generate(prompt, max_tokens=100, temperature=0.7)
     if generated_text:
         print(f"Generated Text: {generated_text}")
 
-    # Example 2: Get model information
-    model_info = client.get_model_info()
-    if model_info:
-        print(f"Model Information: {json.dumps(model_info, indent=2)}")
-
-    # Example 3: List available models
-    models = client.list_available_models()
-    if models:
-        print(f"Available Models: {models}")
-
-    # Example 4: Get embeddings for input text
-    input_text = "Artificial intelligence is transforming industries."
+    # Example 2: Get embeddings for input text
+    input_text = "Machine learning is a subset of artificial intelligence."
     embedding = client.embedding(input_text)
     if embedding:
         print(f"Embedding: {embedding}")
 
-    # Example 5: Update the model used by the client
+    # Example 3: Update the model used by the client
     client.update_model("another-model-name")
