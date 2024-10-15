@@ -5,7 +5,8 @@ WORKDIR /app
 COPY requirements.txt requirements_production.txt ./
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
 RUN pip install --no-cache-dir -r requirements_production.txt
 
 # Copy the rest of your application code to the container
