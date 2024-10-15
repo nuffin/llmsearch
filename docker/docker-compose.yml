@@ -1,13 +1,13 @@
 services:
   postgres:
-    container_name: ss-postgres
+    container_name: llmsearch-postgres
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ssdb
+      - POSTGRES_DB=llmsearchdb
     # networks:
-    #   - semantic-search
+    #   - llmsearch
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -15,13 +15,13 @@ services:
     restart: always
 
   pgadmin:
-    container_name: ss-pgadmin
+    container_name: llmsearch-pgadmin
     image: dpage/pgadmin4:latest
     environment:
       - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
     # networks:
-    #   - semantic-search
+    #   - llmsearch
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
@@ -29,7 +29,7 @@ services:
     restart: always
 
   elasticsearch:
-    container_name: ss-elasticsearch
+    container_name: llmsearch-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     environment:
       - discovery.type=single-node
@@ -41,12 +41,12 @@ services:
       - "39200:9200"
       - "39300:9300"
     # networks:
-    #   - semantic-search
+    #   - llmsearch
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
   # opensearch-node1:
-  #   container_name: ss-opensearch-node1
+  #   container_name: llmsearch-opensearch-node1
   #   image: opensearchproject/opensearch:2.5.0 # You can choose the version you need
   #   environment:
   #     - cluster.name=opensearch-cluster
@@ -70,7 +70,7 @@ services:
   #     - "39200:9200" # OpenSearch REST API
   #     - "39600:9600" # Performance Analyzer
   #   # networks:
-  #   #   - semantic-search
+  #   #   - llmsearch
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "http://localhost:9200"]
   #     interval: 30s
@@ -78,7 +78,7 @@ services:
   #     retries: 5
 
   # opensearch-dashboards:
-  #   container_name: ss-opensearch-dashboards
+  #   container_name: llmsearch-opensearch-dashboards
   #   image: opensearchproject/opensearch-dashboards:2.5.0
   #   ports:
   #     - "35601:5601" # OpenSearch Dashboards
@@ -86,10 +86,10 @@ services:
   #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
   #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
   #   # networks:
-  #   #   - semantic-search
+  #   #   - llmsearch
 
 # networks:
-#   semantic-search:
+#   llmsearch:
 #     driver: bridge
 
 volumes:
