@@ -1,4 +1,4 @@
-FROM semantic-search-base:latest
+FROM llmsearch-base:latest
 
 WORKDIR /app
 
