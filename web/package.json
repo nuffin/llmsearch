@@ -1,5 +1,5 @@
 {
-  "name": "semantic-search-web",
+  "name": "llmsearch-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^8.34.0",
+    "axios": "^1.7.7",
     "crc": "^4.3.2",
     "next": "14.2.15",
     "path": "^0.12.7",
