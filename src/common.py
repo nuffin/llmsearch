@@ -8,7 +8,7 @@ app = None
 
 
 if app is None:
-    server_name = getenv("SERVER_NAME", "Semantic Search Engine")
+    server_name = getenv("SERVER_NAME", "LLM Search Engine")
     print(f"Server Name: {server_name}")
     public_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "public"))
     public_path = getenv("PUBLIC_PATH", public_path)
