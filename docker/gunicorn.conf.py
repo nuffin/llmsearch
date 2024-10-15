@@ -1,7 +1,13 @@
 # gunicorn.conf.py
 
+from env import getenv
+
+
+_host = getenv("HOST", "0.0.0.0")
+_port = getenv("PORT", 58000)
+
 # Server Socket
-bind = "0.0.0.0:58000"  # Address and port to bind to
+bind = f"{_host}:{_port}"
 
 # Worker Processes
 workers = 4  # Number of worker processes
