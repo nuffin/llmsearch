@@ -1,10 +1,10 @@
-# Semantic Search
+# LLM Search
 
 [中文](README.zh.md)
 
 ## Summary
 
-Perform efficient semantic search through local or remote large model backends and ElasticSearch to reduce hardware requirements.
+Perform efficient semantic search through local or remote LLM backends and ElasticSearch to reduce hardware requirements.
 
 Suitable for personal use with relatively low hardware configurations, and also for organizations with local large model backends deployed.
 
