@@ -1,5 +1,7 @@
 import bcrypt
+import uuid
 from sqlalchemy import event
+from sqlalchemy.dialects.postgresql import UUID
 
 from db import db
 from .base import timestamped, soft_deletable
@@ -10,9 +12,15 @@ from .base import timestamped, soft_deletable
 class User(db.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(128), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    id = db.Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        unique=True,
+        nullable=False,
+    )
+    username = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
 
     def __repr__(self):
         return f"<User {self.username}>"

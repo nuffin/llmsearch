@@ -5,9 +5,9 @@ db = SQLAlchemy()
 
 
 def init_db(app):
-    from models import File, User
+    from models import File, Task, User
 
-    __models = [File, User]
+    __models = [File, Task, User]
 
     db.init_app(app)
 
