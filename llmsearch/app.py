@@ -17,9 +17,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 # Create a custom CLI group
-cli = AppGroup('cli')
+cli = AppGroup("cli")
 
-@cli.command('config')
+
+@cli.command("config")
 def dump_config():
     """Show config."""
     print("===================================================================")
@@ -45,7 +46,7 @@ def create_app():
         template_folder=public_path,
         static_url_path="/",
     )
-    app.config.from_object('config.Config')
+    app.config.from_object("config.Config")
     CORS(app)
 
     dash_app = Dash(
@@ -64,7 +65,9 @@ def create_app():
                 [
                     dbc.Row(
                         [
-                            dbc.Col(html.H1("Simple Dash App", className="text-center")),
+                            dbc.Col(
+                                html.H1("Simple Dash App", className="text-center")
+                            ),
                             dbc.Col(
                                 html.P(
                                     "This is a simple web app using Flask and Dash.",
@@ -98,6 +101,7 @@ def main():
     ## print(f"meme_type={meme_type}")
 
     from env import getenv
+
     host = getenv("HOST")
     port = getenv("PORT")
     app = create_app()
