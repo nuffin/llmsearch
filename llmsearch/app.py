@@ -92,14 +92,6 @@ def create_app():
 
 
 def main():
-    ## from filetypes.mimetype import detect
-
-    ## dir = os.path.dirname(__file__)
-    ## filepath = os.path.realpath(os.path.join(dir, "..", "requirements.txt"))
-    ## print(f"filepath={filepath}")
-    ## meme_type = detect(filepath)
-    ## print(f"meme_type={meme_type}")
-
     from env import getenv
 
     host = getenv("HOST")
