@@ -136,7 +136,7 @@ class LocalAIClient(ClientBase):
 # Example usage:
 if __name__ == "__main__":
     # Initialize the client
-    client = LocalAIClient(base_url="http://localhost:8080", model="your-model-name")
+    client = LocalAIClient(base_url="http://localhost:8080")
 
     # Example 1: Generating text
     prompt = "Tell me a story about a brave knight."
