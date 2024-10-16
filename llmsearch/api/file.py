@@ -1,15 +1,17 @@
 import os
 
-from flask import (current_app, jsonify, request)
+from flask import current_app, jsonify, request
 import hashlib
 from werkzeug.utils import secure_filename
 
 from env import getenv
 from .blueprint import bp
 
-@bp.route('/upload', methods=['POST'])
+
+@bp.route("/upload", methods=["POST"])
 def upload():
-    return jsonify(message='Search'), 200
+    return jsonify(message="Search"), 200
+
 
 ALLOWED_EXTENSIONS = {
     "txt",
@@ -69,5 +71,3 @@ def upload_file():
         )
     else:
         return jsonify({"error": "File type not allowed"}), 400
-
-

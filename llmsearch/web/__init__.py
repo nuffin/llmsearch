@@ -1,14 +1,15 @@
 from flask import (
-        Blueprint, 
+    Blueprint,
     redirect,
     render_template_string,
     request,
-send_from_directory,
+    send_from_directory,
     session,
     url_for,
-    )
+)
 
-bp = Blueprint('web', __name__, url_prefix='')
+bp = Blueprint("web", __name__, url_prefix="")
+
 
 # @web_blueprint.route("/")
 # def home():
@@ -23,6 +24,7 @@ bp = Blueprint('web', __name__, url_prefix='')
 @bp.route("/<path:path>")
 def serve_react_app(path):
     return send_from_directory(bp.static_folder, "index.html")
+
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -68,5 +70,3 @@ def about():
     <p><a href="/">Back to home</a></p>
     """
     )
-
-
