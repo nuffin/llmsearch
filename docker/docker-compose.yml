@@ -11,7 +11,7 @@ services:
 
   postgres:
     container_name: llmsearch-postgres
-    image: postgres:latest
+    image: postgres:17.0-bookworm
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -26,7 +26,7 @@ services:
 
   pgadmin:
     container_name: llmsearch-pgadmin
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:8.12
     environment:
       - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
