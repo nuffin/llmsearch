@@ -1,4 +1,4 @@
-torch==2.4.1
+torch==2.4.1 ## for fastai
 torchaudio==2.4.1
 torchvision==0.19.1
 python-magic==0.4.27
@@ -18,5 +18,11 @@ bcrypt==4.2.0
 uvicorn==0.32.0
 asgiref==3.8.1
 requests[security]=2.32.3
-tensorflow==2.17.0
+tensorflow[and-cuda]==2.17.0
 transformers==4.45.2
+scikit-learn==1.5.2
+fastai==2.7.17
+# bark==0.1.5
+joblib==1.4.2
+dspy-ai==2.5.12
+pgvector==0.3.5
