@@ -49,3 +49,4 @@ python3 -m llmpa
 ## TODO
 
 - [ ] internal LLM server with pytorch and tensorflow
+- [ ] add email clients
