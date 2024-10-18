@@ -7,6 +7,7 @@ sys.path.insert(0, project_root)
 
 def main():
     from app import main as appmain
+
     appmain()
 
 

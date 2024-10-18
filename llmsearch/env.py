@@ -18,6 +18,7 @@ __default_values = {
     "SQLALCHEMY_ENGINE_POOL_RECYCLE": 1800,  # Recycle connections after 30 minutes (1800 seconds)
     "SQLALCHEMY_ENGINE_POOL_PRE_PING": True,  # Enable pre-ping to ensure connections are valid"
     "LOG_LEVEL": "INFO",
+    "DEBUG": False,
 }
 
 

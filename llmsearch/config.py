@@ -25,4 +25,5 @@ class Config:
         "pool_timeout": SQLALCHEMY_ENGINE_POOL_TIMEOUT,
         "pool_recycle": SQLALCHEMY_ENGINE_POOL_RECYCLE,
         "pool_pre_ping": SQLALCHEMY_ENGINE_POOL_PRE_PING,
+        "future": True,  # Use SQLAlchemy 2.0 style, which supports async
     }
