@@ -11,7 +11,8 @@ services:
 
   postgres:
     container_name: llmsearch-postgres
-    image: postgres:17.0-bookworm
+    # image: postgres:17.0-bookworm
+    image: postgres-pgvector:latest
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
