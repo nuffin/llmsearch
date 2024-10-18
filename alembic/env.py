@@ -47,16 +47,19 @@ def get_async_engine():
         poolclass=pool.NullPool,
     )
 
+
 async def run_migrations_async():
     connectable = get_async_engine()
 
     async with connectable.connect() as connection:
+
         def run_migrations_sync(connection):
             context.configure(connection=connection, target_metadata=target_metadata)
             context.run_migrations()
 
         async with connection.begin():
             await connection.run_sync(run_migrations_sync)
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -102,6 +105,7 @@ def run_migrations_online() -> None:
     ##         context.run_migrations()
 
     import asyncio
+
     asyncio.run(run_migrations_async())
 
 

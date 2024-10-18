@@ -12,7 +12,7 @@ bind = f"{_host}:{_port}"
 # Worker Processes
 workers = 4  # Number of worker processes
 # worker_class = "gthread"  # Use threaded workers
-worker_class = "uvicorn.workers.UvicornWorker" ## for async
+worker_class = "uvicorn.workers.UvicornWorker"  ## for async
 threads = 2  # Number of threads per worker
 
 # Timeout settings

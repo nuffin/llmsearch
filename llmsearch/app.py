@@ -92,14 +92,14 @@ def create_app():
     init_db(app)
 
     # Add a route to print the routing table
-    @app.route('/routes')
+    @app.route("/routes")
     def list_routes():
         output = []
         for rule in app.url_map.iter_rules():
-            methods = ','.join(rule.methods)
+            methods = ",".join(rule.methods)
             output.append(f"{rule.endpoint}: {rule} [{methods}]")
 
-        return '<br>'.join(output)
+        return "<br>".join(output)
 
     ## @app.before_request
     ## def log_request_info():
@@ -107,15 +107,17 @@ def create_app():
     ##     app.logger.debug('Body: %s', request.get_data())
 
     for rule in app.url_map.iter_rules():
-        methods = ','.join(rule.methods)
+        methods = ",".join(rule.methods)
         print(f"{rule.endpoint}: {rule} [{methods}]")
 
     app.config["SERVER_NAME"] = None
 
     return app
 
+
 app = create_app()
 asgiapp = WsgiToAsgi(app)
+
 
 def main():
     from env import getenv
