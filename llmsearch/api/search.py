@@ -3,5 +3,5 @@ from .blueprint import bp
 
 
 @bp.route("/hello", methods=["GET"])
-def search():
+async def search():
     return jsonify(message="Search"), 200

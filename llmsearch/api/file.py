@@ -8,11 +8,6 @@ from env import getenv
 from .blueprint import bp
 
 
-@bp.route("/upload", methods=["POST"])
-def upload():
-    return jsonify(message="Search"), 200
-
-
 ALLOWED_EXTENSIONS = {
     "txt",
     "pdf",
@@ -37,7 +32,7 @@ def allowed_file(filename):
 
 
 @bp.route("/upload", methods=["POST"])
-def upload_file():
+async def upload():
     if "file" not in request.files:
         return jsonify({"error": "No file part"}), 400
     file = request.files["file"]
