@@ -20,6 +20,7 @@ parsers = {
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": xlsx.XlsxFileParser,
     "text/csv": csv.CsvFileParser,
     "text/plain": text.TextFileParser,
+    "text/x-ini": text.TextFileParser,
     "image/gif": image.ImageFileParser,
     "image/jpeg": image.ImageFileParser,
     "image/png": image.ImageFileParser,
