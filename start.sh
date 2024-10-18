@@ -2,4 +2,4 @@
 
 ENVNAME=$1
 
-env ENVIRONMENT=${ENVNAME} python3 src/app.py
+env ENVIRONMENT=${ENVNAME} python3 -m llmpa

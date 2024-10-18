@@ -1,10 +1,10 @@
-FROM llmsearch-base:latest
+FROM llmpa-base:latest
 
 WORKDIR /app
 
 COPY docker/gunicorn.conf.py ./
 COPY .env.production ./.env
-COPY llmsearch/ .
+COPY llmpa/ .
 COPY public/ ./public
 
 # Expose the port the app runs on (change if necessary)

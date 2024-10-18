@@ -1,24 +1,24 @@
 services:
-  llmsearch:
-    container_name: llmsearch-llmsearch
-    image: llmsearch:latest
+  llmpa:
+    container_name: llmpa-llmpa
+    image: llmpa:latest
     ports:
       - "58000:58000"
     environment:
-      - FLASK_APP=llmsearch
+      - FLASK_APP=llmpa
       - FLASK_ENV=development
       - FLASK_RUN_HOST=
 
   postgres:
-    container_name: llmsearch-postgres
+    container_name: llmpa-postgres
     # image: postgres:17.0-bookworm
     image: postgres-pgvector:latest
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=llmsearchdb
+      - POSTGRES_DB=llmpadb
     # networks:
-    #   - llmsearch
+    #   - llmpa
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -26,13 +26,13 @@ services:
     restart: always
 
   pgadmin:
-    container_name: llmsearch-pgadmin
+    container_name: llmpa-pgadmin
     image: dpage/pgadmin4:8.12
     environment:
       - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
     # networks:
-    #   - llmsearch
+    #   - llmpa
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
@@ -40,7 +40,7 @@ services:
     restart: always
 
   elasticsearch:
-    container_name: llmsearch-elasticsearch
+    container_name: llmpa-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     environment:
       - discovery.type=single-node
@@ -52,27 +52,27 @@ services:
       - "59200:9200"
       - "59300:9300"
     # networks:
-    #   - llmsearch
+    #   - llmpa
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
   localai:
-    container_name: llmsearch-localai
+    container_name: llmpa-localai
     image: localai/localai:latest-aio-gpu-nvidia-cuda-12
     ports:
       - "58080:8080"
     volumes:
-      - local-ai-models:/build/models
+      - global-local-ai-models:/build/models
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
     # networks:
-    #   - llmsearch
+    #   - llmpa
 
   ollama:
-    container_name: llmsearch-ollama
+    container_name: llmpa-ollama
     image: ollama:latest
     ports:
       - "51400:51400"
@@ -86,10 +86,10 @@ services:
           devices:
             - capabilities: [gpu]
     # networks:
-    #   - llmsearch
+    #   - llmpa
 
   # opensearch-node1:
-  #   container_name: llmsearch-opensearch-node1
+  #   container_name: llmpa-opensearch-node1
   #   image: opensearchproject/opensearch:2.5.0 # You can choose the version you need
   #   environment:
   #     - cluster.name=opensearch-cluster
@@ -113,7 +113,7 @@ services:
   #     - "59200:9200" # OpenSearch REST API
   #     - "59600:9600" # Performance Analyzer
   #   # networks:
-  #   #   - llmsearch
+  #   #   - llmpa
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "http://localhost:9200"]
   #     interval: 30s
@@ -121,7 +121,7 @@ services:
   #     retries: 5
 
   # opensearch-dashboards:
-  #   container_name: llmsearch-opensearch-dashboards
+  #   container_name: llmpa-opensearch-dashboards
   #   image: opensearchproject/opensearch-dashboards:2.5.0
   #   ports:
   #     - "55601:5601" # OpenSearch Dashboards
@@ -129,10 +129,10 @@ services:
   #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
   #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
   #   # networks:
-  #   #   - llmsearch
+  #   #   - llmpa
 
 # networks:
-#   llmsearch:
+#   llmpa:
 #     driver: bridge
 
 volumes:
@@ -141,6 +141,7 @@ volumes:
   esdata:
     driver: local
   opensearch-data:
-  local-ai-models:
+  global-local-ai-models:
+    external: true
   ollama-models:
 

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker compose -p llmsearch -f docker/docker-compose.yml up -d
+docker compose -p llmpa -f docker/docker-compose.yml up -d

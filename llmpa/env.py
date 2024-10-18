@@ -9,7 +9,7 @@ __default_values = {
     "SERVER_NAME": "LLM Search Server",
     "HOST": "0.0.0.0",
     "PORT": 58000,
-    "DATABASE_URI": "postgresql+psycopg2://postgres:postgres@localhost:35432/llmsearch",
+    "DATABASE_URI": "postgresql+psycopg2://postgres:postgres@localhost:35432/llmpa",
     "PUBLIC_PATH": "public",
     "UPLOADS_PATH": "data/uploads",
     "SQLALCHEMY_ENGINE_POOL_SIZE": 10,  # Pool size (number of connections to keep in the pool)

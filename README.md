@@ -21,12 +21,12 @@ By uploading documents in various file formats, re-training can be performed acc
 #### With docker
 
 ```sh
-docker compose -p llmsearch -f docker/docker-compose.yml up -d
+docker compose -p llmpa -f docker/docker-compose.yml up -d
 ```
 
 the default docker-compose.yml contains ollama and localai containers, in which the ollama image is built with `scripts/build-ollama-image.sh`
 
-### Run the llmsearch engine
+### Run the llmpa engine
 
 #### With docker
 
@@ -34,7 +34,7 @@ There is already llm engine entry in docker/docker-comopose.yml. or you can run 
 
 ```sh
 scripts/build-image.sh
-docker run -d -p 58000:58000 --name llmsearch llmsearch
+docker run -d -p 58000:58000 --name llmpa llmpa
 ```
 
 #### Without docker
@@ -43,7 +43,7 @@ Assumed you are in the root directory of the project:
 
 ```sh
 pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu124
-python3 -m llmsearch
+python3 -m llmpa
 ```
 
 ## TODO
