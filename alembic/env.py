@@ -13,7 +13,6 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncConnection, create_async_en
 
 from alembic import context
 
-from app import create_app
 from db import db, init_models
 
 # this is the Alembic Config object, which provides
