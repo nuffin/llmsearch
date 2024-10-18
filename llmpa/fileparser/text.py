@@ -9,4 +9,6 @@ class TextFileParser(BaseFileParser):
         print("Parsing text file")
 
     def tokenize(self):
-        print("Tokenizing text file")
+        print(
+            f"Tokenizing file: {self.file_path} ({self.file_type}): {self.file_mimetype_name}"
+        )
