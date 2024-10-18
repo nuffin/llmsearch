@@ -1,2 +1,7 @@
+from .task import Task
+
+
 class BaseAgent:
-    pass
+
+    def perform(self, task: Task):
+        raise NotImplementedError

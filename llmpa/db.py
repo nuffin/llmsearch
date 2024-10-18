@@ -14,9 +14,9 @@ async_session = sessionmaker(async_engine, class_=AsyncSession, expire_on_commit
 
 
 def init_models():
-    from models import File, User
+    from models import File, Task, User
 
-    __models = [File, User]
+    __models = [File, Task, User]
 
 
 def init_db(app: Flask):

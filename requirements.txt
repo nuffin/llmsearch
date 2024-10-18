@@ -1,4 +1,4 @@
-torch==2.4.1
+torch==2.4.1 ## for fastai
 torchaudio==2.4.1
 torchvision==0.19.1
 python-magic==0.4.27
@@ -8,8 +8,8 @@ dash-bootstrap-components==1.6.0
 pandas==2.2.3
 flask-cors==5.0.0
 python-dotenv==1.0.1
-Flask-SQLAlchemy==3.1.1
 sqlalchemy[asyncio]==2.0.36
+Flask-SQLAlchemy==3.1.1
 asyncpg==0.29.0
 psycopg2-binary==2.9.9
 alembic==1.13.3
@@ -17,3 +17,11 @@ black==24.10.0
 bcrypt==4.2.0
 uvicorn==0.32.0
 asgiref==3.8.1
+tensorflow[and-cuda]==2.17.0
+transformers==4.45.2
+scikit-learn==1.5.2
+fastai==2.7.17
+# bark==0.1.5
+joblib==1.4.2
+dspy-ai==2.5.12
+pgvector==0.3.5
