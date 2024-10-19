@@ -17,8 +17,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=llmpadb
-    # networks:
-    #   - llmpa
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -31,8 +29,6 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=nuffin@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=123456
-    # networks:
-    #   - llmpa
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
@@ -51,8 +47,6 @@ services:
     ports:
       - "59200:9200"
       - "59300:9300"
-    # networks:
-    #   - llmpa
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
@@ -68,8 +62,6 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
-    # networks:
-    #   - llmpa
 
   ollama:
     container_name: llmpa-ollama
@@ -85,8 +77,6 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
-    # networks:
-    #   - llmpa
 
   # opensearch-node1:
   #   container_name: llmpa-opensearch-node1
@@ -112,8 +102,6 @@ services:
   #   ports:
   #     - "59200:9200" # OpenSearch REST API
   #     - "59600:9600" # Performance Analyzer
-  #   # networks:
-  #   #   - llmpa
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "http://localhost:9200"]
   #     interval: 30s
@@ -128,11 +116,82 @@ services:
   #   environment:
   #     OPENSEARCH_HOSTS: '["http://opensearch-node1:9200"]'
   #     OPENSEARCH_SECURITY_ADMIN_PASSWORD: admin_password # Set the admin password here for dashboards
-  #   # networks:
-  #   #   - llmpa
 
+  etcd:
+    container_name: llmpa-etcd
+    image: quay.io/coreos/etcd:v3.5.5
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      # - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/etcd:/etcd
+      - etcd:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  minio:
+    container_name: llmpa-minio
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "59001:9001"
+      - "59000:9000"
+    volumes:
+      # - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/minio:/minio_data
+      - minio:/minio_data
+    command: minio server /minio_data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  standalone:
+    container_name: llmpa-milvus-standalone
+    image: milvusdb/milvus:v2.4.13-gpu-hotfix
+    ## for CPU
+    # image: milvusdb/milvus:v2.4.13-hotfix
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+    - seccomp:unconfined
+    environment:
+      ETCD_ENDPOINTS: llmpa-etcd:2379
+      MINIO_ADDRESS: llmpa-minio:9000
+    volumes:
+      # - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/milvus:/var/lib/milvus
+      - milvus:/var/lib/milvus
+    ## for CPU
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 30s
+      start_period: 90s
+      timeout: 20s
+      retries: 3
+    ports:
+      - "59530:19530"
+      - "59091:9091"
+    ## for GPU
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              device_ids: ["0"]
+    depends_on:
+      - "etcd"
+      - "minio"
 # networks:
-#   llmpa:
+#   default:
+#     name: llmpa
 #     driver: bridge
 
 volumes:
@@ -144,4 +203,7 @@ volumes:
   global-local-ai-models:
     external: true
   ollama-models:
+  milvus:
+  minio:
+  etcd:
 
