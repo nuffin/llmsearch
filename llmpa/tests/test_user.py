@@ -13,7 +13,7 @@ from sqlalchemy import select
 
 from app import create_app
 from db import db, async_session
-from models import User
+from schemas import User
 
 
 class TestUserModel(unittest.IsolatedAsyncioTestCase):
