@@ -19,8 +19,16 @@ class BaseBackend:
     ) -> Optional[str]:
         raise NotImplementedError
 
-    def embedding_text(self, text: str, model: str) -> Optional[List[float]]:
+    def embedding(
+        self, model: str, text: Optional[str] = None, filepath: Optional[str] = None
+    ) -> Optional[List[float]]:
+        if filepath:
+            return self.embedding_file(model, filepath)
+        elif text:
+            return self.embedding_text(model, text)
+
+    def embedding_text(self, model: str, text: str) -> Optional[List[float]]:
         raise NotImplementedError
 
-    def embedding_file(self, filepath: str, model: str) -> Optional[List[float]]:
+    def embedding_file(self, model: str, filepath: str) -> Optional[List[float]]:
         raise NotImplementedError

@@ -21,8 +21,16 @@ requests[security]=2.32.3
 tensorflow[and-cuda]==2.17.0
 transformers==4.45.2
 scikit-learn==1.5.2
-fastai==2.7.17
+#fastai==2.7.17
 # bark==0.1.5
 joblib==1.4.2
 dspy-ai==2.5.12
 pgvector==0.3.5
+pytorchvideo==0.1.5
+tensorrt==10.5.0
+tensorflow-addons==0.23.0
+tensorflow-hub==0.16.1
+opencv-python==4.10.0.84
+pymilvus==2.4.8
+tensorrt==10.5.0
+nvidia-tensorrt==99.0.0

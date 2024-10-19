@@ -2,10 +2,10 @@ import requests
 import json
 from typing import Optional, List
 
-from .base import ClientBase
+from .base import BackendBase
 
 
-class OllamaClient(ClientBase):
+class OllamaBackend(BackendBase):
     def __init__(self, base_url: str, timeout: Optional[int] = 10):
         """
         Initializes the Ollama client with the specified server base URL.
@@ -14,7 +14,7 @@ class OllamaClient(ClientBase):
             base_url (str): The base URL of the Ollama server (e.g., "http://localhost:11434").
             timeout (int, optional): Timeout for the HTTP requests. Default is 10 seconds.
         """
-        super(OllamaClient, self).__init__(base_url, timeout)
+        super(OllamaBackend, self).__init__(base_url, timeout)
 
     def generate(
         self,
@@ -103,7 +103,7 @@ class OllamaClient(ClientBase):
 # Example usage:
 if __name__ == "__main__":
     # Initialize the client
-    client = OllamaClient(base_url="http://localhost:11434", model="your-model-name")
+    client = OllamaBackend(base_url="http://localhost:11434", model="your-model-name")
 
     # Example 1: Generating text
     prompt = "Describe the future of AI."

@@ -2,7 +2,7 @@ import openai
 from typing import Optional, List
 
 
-class OpenAIClient:
+class OpenAIBackend:
     def __init__(self, api_key: str, model: str):
         """
         Initializes the OpenAI client with the specified API key and model.
@@ -83,7 +83,7 @@ class OpenAIClient:
 # Example usage:
 if __name__ == "__main__":
     # Initialize the client
-    client = OpenAIClient(api_key="your-api-key", model="text-davinci-003")
+    client = OpenAIBackend(api_key="your-api-key", model="text-davinci-003")
 
     # Example 1: Generating text
     prompt = "Explain the theory of relativity."
