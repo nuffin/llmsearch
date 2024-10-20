@@ -11,8 +11,6 @@ from . import text
 from . import image
 from . import video
 
-from .mimetype import detect
-
 parsers = {
     "application/pdf": pdf.PdfFileParser,
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document": docx.DocxFileParser,
@@ -32,6 +30,8 @@ parsers = {
 
 
 def tokenize(filepath: str):
+    from .mimetype import detect
+
     mimetype = detect(filepath)
     if mimetype in parsers:
         parser = parsers[mimetype](filepath)

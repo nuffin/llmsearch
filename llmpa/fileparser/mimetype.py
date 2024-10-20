@@ -33,21 +33,25 @@ mimetypes_names = {
     "video/mp4": "MP4 Video",  # mp4
     "video/quicktime": "QuickTime Video",  # mov
     "video/x-msvideo": "AVI Video",  # avi
+    "font/woff": "Web Open Font Format",  # woff
 }
 
 supported_mimetypes_names = mimetypes_names
 
 
-def detect(filepath: str, follow_symlinks: bool = True) -> str:
+def _detect(filepath: str, follow_symlinks: bool = True) -> str:
     resolved_filepath = follow_symlinks and os.path.realpath(filepath) or filepath
     mimetype = mime.from_file(resolved_filepath) if os.path.isfile(filepath) else None
-    if mimetype in supported_mimetypes_names:
-        if mimetype == "text/x-c" and filepath.endswith(".go"):
-            return "text/x-go"
-        if mimetype == "text/plain" and filepath.endswith(".ini"):
-            return "text/x-ini"
-        return mimetype
-    return None
+    if mimetype == "text/x-c" and filepath.endswith(".go"):
+        return "text/x-go"
+    if mimetype == "text/plain" and filepath.endswith(".ini"):
+        return "text/x-ini"
+    return mimetype
+
+
+def detect(filepath: str, follow_symlinks: bool = True) -> str:
+    mimetype = _detect(filepath, follow_symlinks)
+    return mimetype if mimetype in supported_mimetypes_names else None
 
 
 def main():
@@ -57,8 +61,9 @@ def main():
         print("Usage: mimetype.py <filepath>")
         sys.exit(1)
     filepath = sys.argv[1]
+    meme_type_real = _detect(filepath)
     meme_type = detect(filepath)
-    print(f"{filepath}: {meme_type}")
+    print(f"{filepath}: {meme_type_real}, {meme_type}")
 
 
 if __name__ == "__main__":

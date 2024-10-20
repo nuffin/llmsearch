@@ -1,8 +1,7 @@
-from .mimetype import detect, mimetypes_names
-
-
 class BaseFileParser:
     def __init__(self, file_path):
+        from .mimetype import detect, mimetypes_names
+
         self.file_path = file_path
         self.file_type = detect(file_path)
         self.file_mimetype_name = mimetypes_names[self.file_type]
