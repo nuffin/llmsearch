@@ -12,3 +12,6 @@ class TextFileParser(BaseFileParser):
         print(
             f"Tokenizing file: {self.file_path} ({self.file_type}): {self.file_mimetype_name}"
         )
+
+    def embedding(self, model: str):
+        print(f"Extracting embeddings using model {model} for text file")
