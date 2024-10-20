@@ -10,17 +10,17 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from clients.http import HttpClient
-from .base import BaseBackend
+from .base import BackendBase
 
 
-class Backend(BaseBackend, HttpClient):
+class Backend(BackendBase):
     def __init__(self, base_url: str, api_key=None, verify_ssl=True, timeout=10):
-        super(Backend, self).__init__(base_url, api_key, verify_ssl, timeout)
+        super(Backend, self).__init__()
         self.client = HttpClient(base_url, api_key, verify_ssl, timeout)
 
     def list_available_models(self) -> Optional[list]:
         try:
-            response = self.client.get("/v1/models", timeout=self.timeout)
+            response = self.client.get("/v1/models")
             print(response.json())
             if not response:
                 return None
@@ -50,7 +50,6 @@ class Backend(BaseBackend, HttpClient):
             response = self.client.post(
                 "/v1/chat/completions",
                 json=payload,
-                timeout=self.timeout,
             )
             if not response:
                 return None
@@ -78,7 +77,6 @@ class Backend(BaseBackend, HttpClient):
                 "/embeddings",
                 extra_headers=headers,
                 json=payload,
-                timeout=self.timeout,
             )
             if not response:
                 return None

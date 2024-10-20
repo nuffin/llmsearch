@@ -20,7 +20,11 @@ class MilvusClient:
 
     def create_collections(self):
         self.create_collection("video_embeddings", 1280)
-        self.create_collection("image_embeddings", 512)
+
+        ## embedding lenth of image
+        #     EfficientNetV2B0: 1280
+        #     ResNet50: 2048
+        self.create_collection("image_embeddings", 2048)
         self.create_collection("audio_embeddings", 1024)
         self.create_collection("text_embeddings", 768)
 

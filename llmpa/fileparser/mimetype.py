@@ -55,11 +55,13 @@ def detect(filepath: str, follow_symlinks: bool = True) -> str:
 
 
 def main():
+    import os
     import sys
 
     if len(sys.argv) < 2:
-        print("Usage: mimetype.py <filepath>")
+        print(f"Usage: {os.path.basename(__file__)} <filepath>")
         sys.exit(1)
+
     filepath = sys.argv[1]
     meme_type_real = _detect(filepath)
     meme_type = detect(filepath)

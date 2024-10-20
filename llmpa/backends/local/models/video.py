@@ -3,11 +3,9 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 import torchvision.models.video as models
 
-# import tensorflow as tf
 import cv2
 import numpy as np
 
-# from tensorflow.keras.applications import EfficientNetV2B0  # Replaceable with other models
 from transformers import TFAutoModel  # For Hugging Face models
 
 # from tensorflow.keras.models import load_model  # To load the converted X3D model
@@ -26,15 +24,6 @@ class EmbeddingExtractor:
         self.model = self.load_model()
 
     def load_model(self):
-        ## if self.model_name == "EfficientNetV2B0":
-        ##     base_model = EfficientNetV2B0(include_top=False, pooling="avg")
-        ##     model = tf.keras.Model(inputs=base_model.input, outputs=base_model.output)
-        ## else if self.model_name == "x3d_model_tf":
-        ##     # Load the converted X3D model
-        ##     model = load_model(self.model_name)
-        ## else:
-        ##     # Load a model from Hugging Face if it's a supported video model
-        ##     model = TFAutoModel.from_pretrained(self.model_name)
         # Load the pre-trained X3D model from torchvision
         if self.model_name == "x3d_m":
             model = models.video.x3d_x3d_m(pretrained=True)
@@ -53,10 +42,6 @@ class EmbeddingExtractor:
         return model
 
     def preprocess_video_frames(self, frames):
-        ## Resize each frame to the input shape for the specific model
-        # frames = [cv2.resize(frame, (self.input_shape[0], self.input_shape[1])) for frame in frames]
-        # frames = np.array(frames).astype("float32") / 255.0  # Normalize to [0, 1]
-        # return frames
         # Resize and normalize each frame to the input shape for X3D (3D CNN models expect normalization)
         transform = transforms.Compose(
             [
@@ -90,9 +75,6 @@ class EmbeddingExtractor:
         cap.release()
 
         if len(frames) > 0:
-            ## frames = self.preprocess_video_frames(frames)
-            ## embeddings = self.model.predict(np.expand_dims(frames, axis=0))  # Add batch dimension
-            ## return embeddings.squeeze()  # Return embedding as numpy array
             frames_tensor = (
                 self.preprocess_video_frames(frames).unsqueeze(0).to(self.device)
             )  # Add batch dimension
@@ -101,19 +83,25 @@ class EmbeddingExtractor:
             return embeddings.squeeze().cpu().numpy()  # Convert to numpy array
         return None
 
-    def process_video(self, video_id, file_path):
+    def process_video(self, file_path):
         embeddings = self.extract_video_embeddings(file_path)
         if embeddings is not None:
-            print(f"Extracted embeddings for video {video_id}: {embeddings.shape}")
+            print(f"Extracted embeddings for video {file_path}: {embeddings.shape}")
         else:
-            print(f"Failed to extract embeddings for video {video_id}")
+            print(f"Failed to extract embeddings for video {file_path}")
         return embeddings
 
 
 if __name__ == "__main__":
-    video_path = "path_to_your_video.mp4"
-    ## extractor = EmbeddingExtractor(model_name="EfficientNetV2B0")  # Change model name here
-    extractor = EmbeddingExtractor(
-        model_name="x3d_m"
-    )  # You can change to x3d_s or x3d_l
-    extractor.process_video(1, video_path)
+    import os
+    import sys
+
+    if len(sys.argv) < 2:
+        print(f"Usage: {os.path.basename(__file__)} <filepath>")
+        sys.exit(1)
+
+    video_path = sys.argv[1]
+
+    def test_model(model_name):
+        extractor = EmbeddingExtractor(model_name=model_name)
+        extractor.process_video(video_path)

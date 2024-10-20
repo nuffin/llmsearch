@@ -3,7 +3,7 @@ from requests.exceptions import HTTPError, Timeout, RequestException
 from typing import Optional, List
 
 
-class BaseBackend:
+class BackendBase:
     def get_model_info(self, model: str) -> Optional[dict]:
         raise NotImplementedError
 
