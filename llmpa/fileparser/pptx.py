@@ -1,7 +1,7 @@
 from .base import BaseFileParser
 
 
-class ImageFileParser(BaseFileParser):
+class PptxFileParser(BaseFileParser):
     def __init__(self, file_path):
         super().__init__(file_path)
 
@@ -9,4 +9,4 @@ class ImageFileParser(BaseFileParser):
         raise NotImplementedError
 
     def tokenize(self):
-        print("Tokenizing image file")
+        print("Tokenizing pptx file")

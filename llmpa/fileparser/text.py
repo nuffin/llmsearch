@@ -1,7 +1,14 @@
-import common
+from .base import BaseFileParser
 
 
-def tokenize(filepath: str):
-    with open(filepath, "r") as f:
-        text = f.read()
-    return text.split()
+class TextFileParser(BaseFileParser):
+    def __init__(self, file_path):
+        super().__init__(file_path)
+
+    def parse(self):
+        print("Parsing text file")
+
+    def tokenize(self):
+        print(
+            f"Tokenizing file: {self.file_path} ({self.file_type}): {self.file_mimetype_name}"
+        )

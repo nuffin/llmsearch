@@ -1,22 +1,26 @@
+import requests
+from requests.exceptions import HTTPError, Timeout, RequestException
 from typing import Optional, List
 
 
-class ClientBase:
-    def __init__(self, base_url: str, timeout: Optional[int] = 10):
-        self.base_url = base_url
-        self.timeout = timeout
+class BaseBackend:
+    def get_model_info(self, model: str) -> Optional[dict]:
+        raise NotImplementedError
+
+    def list_available_models(self) -> Optional[list]:
+        raise NotImplementedError
 
     def generate(
         self,
-        model: str,
         prompt: str,
+        model: Optional[str] = None,
         max_tokens: Optional[int] = 150,
         temperature: Optional[float] = 1.0,
     ) -> Optional[str]:
         raise NotImplementedError
 
-    def embedding_text(self, model: str, text: str) -> Optional[List[float]]:
+    def embedding_text(self, text: str, model: str) -> Optional[List[float]]:
         raise NotImplementedError
 
-    def embedding_image(self, model: str, filepath: str) -> Optional[List[float]]:
+    def embedding_file(self, filepath: str, model: str) -> Optional[List[float]]:
         raise NotImplementedError

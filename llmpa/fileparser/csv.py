@@ -1,12 +1,12 @@
 from .base import BaseFileParser
 
 
-class ImageFileParser(BaseFileParser):
+class CsvFileParser(BaseFileParser):
     def __init__(self, file_path):
         super().__init__(file_path)
 
     def parse(self):
-        raise NotImplementedError
+        print("Parsing csv file")
 
     def tokenize(self):
-        print("Tokenizing image file")
+        print("Tokenizing csv file")
