@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy.ext.declarative import declared_attr
 
-from db import db
+from ..postgres import db
 
 
 ## for backup

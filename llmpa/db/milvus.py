@@ -1,32 +1,47 @@
 from typing import List
-from pymilvus import MilvusClient as MC, FieldSchema, DataType
+from pymilvus import MilvusClient, FieldSchema, DataType
 from uuid import uuid4
 
+from .base import BaseClient
 
-class MilvusClient:
+_dims = {
+        "text": 768,
+
+        ## embedding lenth of image from different models
+        "image": 512,
+        "image_efficientnet": 1280,
+        "image_resnet": 2048,
+
+        "audio": 1024,
+        "video": 1280,
+        }
+
+
+class Client(BaseClient):
     def __init__(
         self,
-        milvus_uri: f"http://localhost:19530",
-        milvus_host="localhost",
-        milvus_port="19530",
+        database_uri: f"http://localhost:19530",
         db_name="default",
     ):
-        self.client = MC(uri=milvus_uri, db_name=db_name)
-        self.collections = {}
+        super(Client, self).__init__(database_uri, db_name)
+        self.client = MilvusClient(uri=database_uri, db_name=db_name)
+        self.init_collections()
+
+    def init_collections(self):
+        collections = self.list_collections()
+        for name in _dims.keys():
+            collection_name = f"{name}_embeddings"
+            if collection_name not in collections:
+                self.create_collection(collection_name, _dims[name])
 
     def list_collections(self):
         collections = self.client.list_collections()
         return collections
 
     def create_collections(self):
-        self.create_collection("video_embeddings", 1280)
-
-        ## embedding lenth of image
-        #     EfficientNetV2B0: 1280
-        #     ResNet50: 2048
-        self.create_collection("image_embeddings", 2048)
-        self.create_collection("audio_embeddings", 1024)
-        self.create_collection("text_embeddings", 768)
+        for name in _dims.keys():
+            collection_name = f"{name}_embeddings"
+            self.create_collection(collection_name, _dims[name])
 
     def drop_collections(self):
         collections = self.list_collections()
@@ -130,7 +145,7 @@ class MilvusClient:
 # Example Usage
 if __name__ == "__main__":
     # Initialize Milvus client
-    milvus_client = MilvusClient("http://localhost:59530")
+    milvus_client = Client("http://localhost:59530")
     collections = milvus_client.list_collections()
     print(f"Existing collections: {collections}")
 

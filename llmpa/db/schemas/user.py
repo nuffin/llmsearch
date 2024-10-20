@@ -1,9 +1,8 @@
 import bcrypt
 import uuid
 from sqlalchemy import event
-from sqlalchemy.dialects.postgresql import UUID
 
-from db import db
+from ..postgres import db
 from .base import timestamped, soft_deletable
 
 
@@ -13,7 +12,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(
-        UUID(as_uuid=True),
+        db.UUID(as_uuid=True),
         primary_key=True,
         default=uuid.uuid4,
         unique=True,

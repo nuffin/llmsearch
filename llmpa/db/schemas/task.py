@@ -1,8 +1,7 @@
 import uuid
-from sqlalchemy.dialects.postgresql import JSON, UUID
 
 from agents.task import TaskStatus
-from db import db
+from ..postgres import db
 from .base import timestamped, soft_deletable
 
 
@@ -12,7 +11,7 @@ class Task(db.Model):
     __tablename__ = "tasks"
 
     id = db.Column(
-        UUID(as_uuid=True),
+        db.UUID(as_uuid=True),
         primary_key=True,
         default=uuid.uuid4,
         unique=True,
@@ -20,7 +19,7 @@ class Task(db.Model):
     )
     status = db.Column(db.String, nullable=False, default=TaskStatus.PENDING)
     type = db.Column(db.String, nullable=False)
-    data = db.Column(JSON, nullable=False)
+    data = db.Column(db.JSON, nullable=False)
 
     def __repr__(self):
         return f"<Task id={self.id}, type={self.type}>"

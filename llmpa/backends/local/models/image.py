@@ -6,11 +6,6 @@ from torchvision.models import resnet50, efficientnet_v2_s
 
 from transformers import AutoModel, AutoFeatureExtractor
 
-# from tensorflow.keras.applications import (
-#     EfficientNetV2B0,
-#     ResNet50,
-# )
-
 
 # EmbeddingExtractor Class with model name as a parameter
 class EmbeddingExtractor:

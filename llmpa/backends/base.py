@@ -15,7 +15,7 @@ def insert_path():
 insert_path()
 del insert_path
 
-from schemas.file import FileInfo
+from schemas import FileInfo
 
 
 JsonType = Dict[str, Any]
