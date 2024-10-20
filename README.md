@@ -50,3 +50,4 @@ python3 -m llmpa
 
 - [ ] internal LLM server with pytorch and tensorflow
 - [ ] add email clients
+- [ ] seperate tensorflow and pytorch to two different containers, and add ues API call to switch between them

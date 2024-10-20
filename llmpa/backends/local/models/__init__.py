@@ -1,3 +1,2 @@
-from . import efficientnet
-from . import resnet
-from . import x3d
+from . import image
+from . import video
