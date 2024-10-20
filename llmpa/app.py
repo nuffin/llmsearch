@@ -11,7 +11,8 @@ import logging
 import plotly.express as px
 
 project_root = os.path.abspath(os.path.dirname(__file__))
-sys.path.insert(0, project_root)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 
 logging.basicConfig(level=logging.DEBUG)
