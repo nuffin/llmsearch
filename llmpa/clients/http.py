@@ -2,6 +2,7 @@ import requests
 from requests.exceptions import HTTPError, Timeout, RequestException
 from typing import Optional, List
 
+
 class HttpClient:
     def __init__(
         self,
@@ -121,5 +122,3 @@ class HttpClient:
             extra_headers=extra_headers,
             timeout=timeout,
         )
-
-
