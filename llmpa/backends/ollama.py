@@ -1,57 +1,46 @@
 import requests
-import json
-from typing import Optional, List
+from typing import List, Optional
 
-from .base import BackendBase
+from clients.http import HttpClient
+from .base import BackendBase, JsonType
 
 
-class OllamaBackend(BackendBase):
+class Backend(BackendBase):
     def __init__(self, base_url: str, timeout: Optional[int] = 10):
-        """
-        Initializes the Ollama client with the specified server base URL.
+        super(Backend, self).__init__()
+        self.client = HttpClient(base_url, timeout)
 
-        Args:
-            base_url (str): The base URL of the Ollama server (e.g., "http://localhost:11434").
-            timeout (int, optional): Timeout for the HTTP requests. Default is 10 seconds.
-        """
-        super(OllamaBackend, self).__init__(base_url, timeout)
+    def get_model_info(self, model_name: str) -> Optional[JsonType]:
+        payload = {"name": model_name}
+
+        try:
+            response = self.client.post("/api/show", json=payload)
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error retrieving model info: {e}")
+            return None
 
     def generate(
         self,
-        model: str,
         prompt: str,
+        model_name: Optional[str] = None,
         max_tokens: Optional[int] = 150,
         temperature: Optional[float] = 1.0,
     ) -> Optional[str]:
-        """
-        Sends a request to the Ollama server to generate text based on the input prompt.
-
-        Args:
-            model (str): The name of the model to be used for inference and embeddings.
-            prompt (str): The prompt or question to send to the Ollama model.
-            max_tokens (int, optional): The maximum number of tokens to generate. Default is 150.
-            temperature (float, optional): The sampling temperature to control the randomness of output. Default is 1.0.
-
-        Returns:
-            str: The generated text or None if the request fails.
-        """
-        headers = {"Content-Type": "application/json"}
-
         payload = {
-            "model": model,
+            "model": model_name,
             "prompt": prompt,
             "max_tokens": max_tokens,
             "temperature": temperature,
         }
 
         try:
-            response = requests.post(
-                f"{self.base_url}/v1/generate",
-                headers=headers,
-                data=json.dumps(payload),
-                timeout=self.timeout,
+            response = self.client.post(
+                "/api/generate",
+                json=payload,
             )
-            response.raise_for_status()
+            if not response:
+                return None
 
             result = response.json()
             if "choices" in result and len(result["choices"]) > 0:
@@ -64,29 +53,17 @@ class OllamaBackend(BackendBase):
             print(f"Error during the request to Ollama: {e}")
             return None
 
-    def embedding(self, model: str, text: str) -> Optional[List[float]]:
-        """
-        Sends a request to the Ollama server to generate embeddings from the input text.
-
-        Args:
-            model (str): The name of the model to be used for inference and embeddings.
-            text (str): The input text for which to generate embeddings.
-
-        Returns:
-            list: A list of floats representing the embedding vector, or None if the request fails.
-        """
-        headers = {"Content-Type": "application/json"}
-
-        payload = {"model": model, "input": text}
+    def embedding(self, text: str, model_name: str) -> Optional[List[float]]:
+        payload = {"model": model_name, "input": text}
 
         try:
-            response = requests.post(
-                f"{self.base_url}/v1/embeddings",
+            response = self.client.post(
+                "/api/embeddings",
                 headers=headers,
-                data=json.dumps(payload),
-                timeout=self.timeout,
+                json=payload,
             )
-            response.raise_for_status()
+            if not response:
+                return None
 
             result = response.json()
             if "data" in result and len(result["data"]) > 0:
@@ -103,7 +80,7 @@ class OllamaBackend(BackendBase):
 # Example usage:
 if __name__ == "__main__":
     # Initialize the client
-    client = OllamaBackend(base_url="http://localhost:11434", model="your-model-name")
+    client = Backend(base_url="http://localhost:51400")
 
     # Example 1: Generating text
     prompt = "Describe the future of AI."
@@ -116,6 +93,3 @@ if __name__ == "__main__":
     embedding = client.embedding(input_text)
     if embedding:
         print(f"Embedding: {embedding}")
-
-    # Example 3: Update the model used by the client
-    client.update_model("another-model-name")

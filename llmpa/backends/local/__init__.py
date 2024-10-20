@@ -1,26 +1,30 @@
 from typing import Optional, List
 
 from ..base import BackendBase
-from .models import efficientnet
-from .models import resnet
-from .models import x3d
+from .models import image
+from .models import video
 
 
 class LocalBackend(BackendBase):
-    def __init__(self, timeout: Optional[int] = 10):
-        """
-        Initializes the Local client.
+    def __init__(self):
+        super(LocalBackend, self).__init__()
 
-        Args:
-            timeout (int, optional): Timeout for the HTTP requests. Default is 10 seconds.
-        """
-        super(LocalBackend, self).__init__(None, timeout)
-
-    def embedding_text(self, model: str, text: str) -> Optional[List[float]]:
+    def embedding_text(
+        self, text: str, model_name: Optional[str] = None
+    ) -> Optional[List[float]]:
         raise NotImplementedError
 
-    def embedding_image(self, model: str, filepath: str) -> Optional[List[float]]:
+    def embedding_image(
+        self, filepath: str, model_name: Optional[str] = None
+    ) -> Optional[List[float]]:
+        extractor = image.EmbeddingExtractor(model_name=model_name)
+
+    def embedding_audio(
+        self, filepath: str, model_name: Optional[str] = None
+    ) -> Optional[List[float]]:
         raise NotImplementedError
 
-    def embedding_video(self, model: str, filepath: str) -> Optional[List[float]]:
+    def embedding_video(
+        self, filepath: str, model_name: Optional[str] = None
+    ) -> Optional[List[float]]:
         raise NotImplementedError

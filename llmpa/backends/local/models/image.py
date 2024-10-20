@@ -25,12 +25,14 @@ class EmbeddingExtractor:
     def load_model(self):
         if self.model_name == "EfficientNetV2B0":
             from torchvision.models import EfficientNet_V2_S_Weights
+
             base_model = efficientnet_v2_s(weights=EfficientNet_V2_S_Weights.DEFAULT)
             self.model = torch.nn.Sequential(*list(base_model.children())[:-1]).to(
                 self.device
             )
         elif self.model_name == "ResNet50":
             from torchvision.models import ResNet50_Weights
+
             base_model = resnet50(weights=ResNet50_Weights.DEFAULT)
             self.model = torch.nn.Sequential(*list(base_model.children())[:-1]).to(
                 self.device
