@@ -36,7 +36,7 @@ mimetypes_names = {
     "font/woff": "Web Open Font Format",  # woff
 }
 
-supported_mimetypes_names = mimetypes_names
+supported_mimetypes = mimetypes_names.keys()
 
 
 def _detect(filepath: str, follow_symlinks: bool = True) -> str:
@@ -51,7 +51,7 @@ def _detect(filepath: str, follow_symlinks: bool = True) -> str:
 
 def detect(filepath: str, follow_symlinks: bool = True) -> str:
     mimetype = _detect(filepath, follow_symlinks)
-    return mimetype if mimetype in supported_mimetypes_names else None
+    return mimetype if mimetype in supported_mimetypes else None
 
 
 def main():
