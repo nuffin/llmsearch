@@ -13,8 +13,6 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncConnection, create_async_en
 
 from alembic import context
 
-from db import db, init_schemas
-
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -26,7 +24,7 @@ if config.config_file_name is not None:
 
 
 ## to init db.metadata
-init_schemas()
+from db import db
 
 # add your model's MetaData object here
 # for 'autogenerate' support

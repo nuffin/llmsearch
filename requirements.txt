@@ -1,6 +1,6 @@
-torch==2.4.1
-torchaudio==2.4.1
-torchvision==0.19.1
+torch==2.5.0
+torchaudio==2.5.0
+torchvision==0.20.0
 python-magic==0.4.27
 flask==3.0.3
 dash==2.18.1
@@ -8,8 +8,8 @@ dash-bootstrap-components==1.6.0
 pandas==2.2.3
 flask-cors==5.0.0
 python-dotenv==1.0.1
-Flask-SQLAlchemy==3.1.1
 sqlalchemy[asyncio]==2.0.36
+Flask-SQLAlchemy==3.1.1
 asyncpg==0.29.0
 psycopg2-binary==2.9.9
 alembic==1.13.3
@@ -17,4 +17,14 @@ black==24.10.0
 bcrypt==4.2.0
 uvicorn==0.32.0
 asgiref==3.8.1
-requests[security]=2.32.3
+requests[security]==2.32.3
+transformers==4.45.2
+scikit-learn==1.5.2
+# fastai==2.7.17 ## need torch<2.5 and >=1.10
+bark==0.1.5
+joblib==1.4.2
+dspy-ai==2.5.12
+pgvector==0.3.5
+pytorchvideo==0.1.5
+opencv-python==4.10.0.84
+pymilvus==2.4.8

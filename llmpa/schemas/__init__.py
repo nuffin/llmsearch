@@ -1,4 +1,1 @@
-from .file import File
-from .user import User
-
-__all__ = ["User", "File"]
+from .fileinfo import FileInfo

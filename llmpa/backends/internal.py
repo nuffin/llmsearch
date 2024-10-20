@@ -1,9 +1,9 @@
 from typing import Optional
 
-from .base import ClientBase
+from .base import BackendBase
 
 
-class InternalClient(ClientBase):
+class InternalBackend(BackendBase):
     def __init__(self, timeout: Optional[int] = 10):
         """
         Initializes the Local client.
@@ -11,4 +11,4 @@ class InternalClient(ClientBase):
         Args:
             timeout (int, optional): Timeout for the HTTP requests. Default is 10 seconds.
         """
-        super(InternalClient, self).__init__(None, timeout)
+        super(InternalBackend, self).__init__(None, timeout)

@@ -1,3 +1,4 @@
+import json as JSON
 import requests
 from requests.exceptions import HTTPError, Timeout, RequestException
 from typing import Optional, List
@@ -19,7 +20,6 @@ class HttpClient:
         self.timeout = timeout
         self.headers = {
             "Authorization": f"Bearer {self.api_key}" if self.api_key else None,
-            "Content-Type": "application/json",
         }
 
     def _make_request(
@@ -44,6 +44,9 @@ class HttpClient:
         """
         url = f"{self.base_url}{endpoint}"
         headers = {**self.headers, **(extra_headers or {})}
+        if json is not None:
+            headers = {**headers, **{"Content-Type": "application/json"}}
+            data = JSON.dumps(json)
 
         print(
             f"data={data}, json={json}, params={params}, extra_headers={extra_headers}"
@@ -53,7 +56,7 @@ class HttpClient:
                 method=method.upper(),
                 url=url,
                 data=data,
-                json=json,
+                # json=json,
                 params=params,
                 headers=headers,
                 verify=self.verify_ssl,
